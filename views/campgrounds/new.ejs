@@ -17,7 +17,7 @@
                         Looks good!
                     </div>
                 </div>
-                <input type="file" name="image" id="" multiple>
+
                 <!-- <div class="mb-3">
                     <label class="form-label" for="image">Image Url</label>
                     <input class="form-control" type="text" id="image" name="campground[image]" required>
@@ -46,11 +46,31 @@
                         Looks good!
                     </div>
                 </div>
+
                 <div class="mb-3">
-                    <button class="btn btn-success">Add Campground</button>
+                    <label class="form-label" for="input-image">Photos</label>
+                    <input id="input-image" type="file" class="file form-control" data-show-upload="false"
+                        data-preview-file-type="text" multiple name="image" required>
                 </div>
 
+                <div class="mb-3">
+                    <button class="btn btn-success btn-upload-image">Add Campground</button>
+                </div>
+
+                <script>
+                    $("#input-image").fileinput({
+                        showUpload: false,
+                        showRemove: true,
+                        required: true,
+                        allowedFileExtensions: ["jpg", "png", "jpeg"]
+                    });
+                    $(".btn-upload-image").on("click", function() {
+                        $("#input-image").fileinput('upload');
+                    });
+                </script>
+
             </form>
+
             <a href="/campgrounds">All Campgrounds</a>
         </div>
     </div>
