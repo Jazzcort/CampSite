@@ -1,7 +1,7 @@
 <% layout('/layouts/boilerplate') %>
     <div class="row">
         <h1 class="text-center">Edit Campground</h1>
-        <div class="col-6 offset-3">
+        <div class="col-md-6 offset-md-3">
             <form action="/campgrounds/<%= campground._id %>?_method=PUT" method="post" novalidate class="validated-form" 
                 enctype="multipart/form-data">
                 <div class="mb-3">
@@ -20,10 +20,7 @@
                         Looks good!
                     </div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label" for="image">Add Images</label>
-                    <input type="file" name="image" id="image" multiple>
-                </div>
+        
                 <div class="mb-3">
                     <label class="form-label" for="price">Campground Price</label>
                     <div class="input-group mb-3">
@@ -43,9 +40,38 @@
                         Looks good!
                     </div>
                 </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="input-image">Add more photos</label>
+                    <input id="input-image" type="file" class="file form-control" data-show-upload="false"
+                        data-preview-file-type="text" multiple name="image">
+                </div>
+
+                <div class="mb-3">
+                    <% campground.images.forEach(function(img, i) { %>
+                        <img src="<%= img.thumbnail %>" class="img-thumbnail" alt="">
+                        <div class="form-check-inline">
+                            <input type="checkbox" id="image-<%= i %>" name="deleteImages[]" value="<%= img.filename %>">
+                        </div>
+                        <label for="image-<%= i %>">Delete</label>
+                    <% }) %>
+                </div>
+
                 <div class="mb-3">
                     <button class="btn btn-info">Update Campground</button>
                 </div>
+
+                <script>
+                    $("#input-image").fileinput({
+                        showUpload: false,
+                        showRemove: true,
+                        maxFileCount: 8,
+                        allowedFileExtensions: ["jpg", "png", "jpeg"]
+                    });
+                    $(".btn-upload-image").on("click", function() {
+                        $("#input-image").fileinput('upload');
+                    });
+                </script>
 
             </form>
             <a href="/campgrounds/<%= campground._id %>">Back To Campground</a>
